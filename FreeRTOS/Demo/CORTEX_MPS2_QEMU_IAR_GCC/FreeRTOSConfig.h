@@ -39,7 +39,6 @@
 * See http://www.freertos.org/a00110.html
 *----------------------------------------------------------*/
 
-#define configUSE_TRACE_FACILITY                 0
 #define configGENERATE_RUN_TIME_STATS            0
 
 #define configUSE_PREEMPTION                     1
@@ -50,7 +49,7 @@
 #define configMINIMAL_STACK_SIZE                 ( ( unsigned short ) 80 )
 #define configTOTAL_HEAP_SIZE                    ( ( size_t ) ( 60 * 1024 ) )
 #define configMAX_TASK_NAME_LEN                  ( 12 )
-#define configUSE_TRACE_FACILITY                 0
+#define configUSE_TRACE_FACILITY                 1
 #define configUSE_16_BIT_TICKS                   0
 #define configIDLE_SHOULD_YIELD                  0
 #define configUSE_CO_ROUTINES                    0
@@ -132,5 +131,7 @@
 #define bktSECONDARY_PRIORITY    ( configMAX_PRIORITIES - 4 )
 
 #define configENABLE_BACKWARD_COMPATIBILITY 0
+
+#include "trcRecorder.h"
 
 #endif /* FREERTOS_CONFIG_H */

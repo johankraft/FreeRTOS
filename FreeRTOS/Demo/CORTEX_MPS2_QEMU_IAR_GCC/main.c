@@ -54,6 +54,9 @@
 #include <stdio.h>
 #include <string.h>
 
+/* Percepio TraceRecorder */
+#include <trcRecorder.h>
+
 /* This project provides two demo applications.  A simple blinky style demo
  * application, and a more comprehensive test and demo application.  The
  * mainCREATE_SIMPLE_BLINKY_DEMO_ONLY setting is used to select between the two.
@@ -100,6 +103,18 @@ void main( void )
 {
     /* See https://www.freertos.org/freertos-on-qemu-mps2-an385-model.html for
      * instructions. */
+
+	/* Initialize TraceRecorder before any FreeRTOS calls are made */	
+	xTraceInitialize();
+	
+	/* Starts tracing to RingBuffer */
+	xTraceEnable(TRC_START);
+	
+	/* Only needed when running TraceRecorder in qemu and using the SysTick
+	timer as time base. Don't use this on real hardware. */
+	#if (configUSE_TRACE_FACILITY == 1)	
+	xTraceTimestampSetPeriod(configCPU_CLOCK_HZ/configTICK_RATE_HZ);
+	#endif
 
     /* Hardware initialisation.  printf() output uses the UART for IO. */
     prvUARTInit();
@@ -198,6 +213,8 @@ void vApplicationDaemonTaskStartupHook( void )
      * execute (sometimes called the timer task).  This is useful if the
      * application includes initialisation code that would benefit from executing
      * after the scheduler has been started. */
+	 
+	 xTraceEnable(TRC_START);
 }
 /*-----------------------------------------------------------*/
 
